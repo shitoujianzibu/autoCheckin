@@ -1,5 +1,5 @@
 name: 'sockboom check in'
 description: 'sockboom check in'
 runs:
-  using: 'python3.7'
+  using: 'docker'
   main: 'checkin.py'
