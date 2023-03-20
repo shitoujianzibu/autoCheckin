@@ -9,36 +9,36 @@ jobs:
   checkin: 
     runs-on: ubuntu-latest
     steps:
-      # - name: checkin traffic
-      #   uses: autoCheckin/checkin@v2
+      - name: checkin traffic
+        uses: autoCheckin/checkin
 
-      - name: Checkin
-        env: 
-          SOCKBOOM_URL: ${{secrets.SOCKBOOM_URL}}
-          SOCKBOOM_USER: ${{secrets.SOCKBOOM_USER}}
-          SOCKBOOM_PASSWD: ${{secrets.SOCKBOOM_PASSWD}}
-        run: |
-          import requests
-          import sys
-          import traceback
-          form_data = {
-            "email": "${{secrets.SOCKBOOM_USER}}",
-            "passwd": "${{secrets.SOCKBOOM_PASSWD}}"
-          }
-          def run(form_data):
-              s = requests.Session()
-              response = s.post("${{secrets.SOCKBOOM_URL}}/auth/login", data=form_data)
-              print(response.text)
-              print(response.status_code)
-              if response.status_code == 200:
-                resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
-                print(resp.text)
-          def main():
-              run(form_data)
-              print("run1")
-          if __name__ == '__main__':
-              try:
-                  sys.exit(main())
-              except Exception as e:
-                  traceback.print_exc()
-        shell: python
+      # - name: Checkin
+      #   env: 
+      #     SOCKBOOM_URL: ${{secrets.SOCKBOOM_URL}}
+      #     SOCKBOOM_USER: ${{secrets.SOCKBOOM_USER}}
+      #     SOCKBOOM_PASSWD: ${{secrets.SOCKBOOM_PASSWD}}
+      #   run: |
+      #     import requests
+      #     import sys
+      #     import traceback
+      #     form_data = {
+      #       "email": "${{secrets.SOCKBOOM_USER}}",
+      #       "passwd": "${{secrets.SOCKBOOM_PASSWD}}"
+      #     }
+      #     def run(form_data):
+      #         s = requests.Session()
+      #         response = s.post("${{secrets.SOCKBOOM_URL}}/auth/login", data=form_data)
+      #         print(response.text)
+      #         print(response.status_code)
+      #         if response.status_code == 200:
+      #           resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
+      #           print(resp.text)
+      #     def main():
+      #         run(form_data)
+      #         print("run1")
+      #     if __name__ == '__main__':
+      #         try:
+      #             sys.exit(main())
+      #         except Exception as e:
+      #             traceback.print_exc()
+      #   shell: python
