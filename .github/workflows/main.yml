@@ -1,7 +1,4 @@
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: "0 2 * * *"
 jobs:
@@ -26,26 +23,23 @@ jobs:
                 resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
                 print(resp.json())
                 if resp.status_code == 200:
-                  if "${{secrets.WEB_HOOK2}}":
-                    print('存在')
-                    # if resp.json()['ret'] == 0:
-                    #   msg_data = {
-                    #     "msgtype": "markdown",
-                    #     "markdown": {
-                    #       "content": "${{secrets.SOCKBOOM_USER}}" + "，签到成功，获得<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
-                    #     }
-                    #   }
-                    #   s.post("${{secrets.WEB_HOOK}}", json=msg_data)
-                    # else:
-                    #   msg_data = {
-                    #     "msgtype": "markdown",
-                    #     "markdown": {
-                    #       "content": "${{secrets.SOCKBOOM_USER}}" + "，签到失败，<font color=\"warning\">" + resp.json()['msg'] + "</font>"
-                    #     }
-                    #   }
-                    #   s.post("${{secrets.WEB_HOOK}}", json=msg_data)
-                  else:
-                    print('不存在')
+                  if "${{secrets.WEB_HOOK}}":
+                    if resp.json()['ret'] == 0:
+                      msg_data = {
+                        "msgtype": "markdown",
+                        "markdown": {
+                          "content": "${{secrets.SOCKBOOM_USER}}" + "，签到成功，获得<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
+                        }
+                      }
+                      s.post("${{secrets.WEB_HOOK}}", json=msg_data)
+                    else:
+                      msg_data = {
+                        "msgtype": "markdown",
+                        "markdown": {
+                          "content": "${{secrets.SOCKBOOM_USER}}" + "，签到失败，<font color=\"warning\">" + resp.json()['msg'] + "</font>"
+                        }
+                      }
+                      s.post("${{secrets.WEB_HOOK}}", json=msg_data)
           def main():
               run(form_data)
               print("run1")
