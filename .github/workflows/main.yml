@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: checkin traffic
         uses: shitoujianzibu/autoCheckin@main
-        with:
-        python-version: 3.7
 
       # - name: Checkin
       #   env: 
