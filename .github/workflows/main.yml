@@ -9,8 +9,8 @@ jobs:
   checkin: 
     runs-on: ubuntu-latest
     steps:
-      - name: checkin traffic
-        uses: actions/checkin@v2
+      # - name: checkin traffic
+      #   uses: autoCheckin/checkin@v2
 
       - name: Checkin
         env: 
