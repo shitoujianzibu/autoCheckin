@@ -30,7 +30,7 @@ jobs:
               if response.status_code == 200:
                 resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
                 print(resp.json())
-                if resp.status_code == 200
+                if resp.status_code == 200:
                   if resp.json()['ret'] == 0:
                     msg_data = {
                       "msgtype": "markdown",
