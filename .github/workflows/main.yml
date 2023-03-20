@@ -35,7 +35,7 @@ jobs:
                     msg_data = {
                       "msgtype": "markdown",
                       "markdown": {
-                        "content": "<font color=\"comment\">"+ ${{secrets.WEB_HOOK}} + "</font>" + "，签到成功，获得<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
+                        "content": "<font color=\"comment\">"+ ${{secrets.SOCKBOOM_USER}} + "</font>，签到成功，获得<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
                       }
                     }
                     result = s.post("${{secrets.WEB_HOOK}}", json=msg_data)
@@ -45,7 +45,7 @@ jobs:
                     msg_data = {
                       "msgtype": "markdown",
                       "markdown": {
-                        "content": "<font color=\"comment\">"+ ${{secrets.WEB_HOOK}} + "</font>" + "，签到失败，<font color=\"warning\">" + resp.json()['msg'] + "</font>"
+                        "content": "<font color=\"comment\">"+ ${{secrets.SOCKBOOM_USER}} + "</font>，签到失败<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
                       }
                     }
                     s.post("${{secrets.WEB_HOOK}}", json=msg_data)
