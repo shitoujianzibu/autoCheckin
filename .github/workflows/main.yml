@@ -1,0 +1,76 @@
+name:''z
+on: 
+ push:
+ workflow_dispatch:
+ schedule:
+ # 定时任务 每天 8:00 自动签到，按照计划任务队列，可能延迟 0 + 8 = 北京时间 8
+    - cron: '00 0 * * *'
+
+jobs:
+  juejin:
+    runs-on: ubuntu-latest
+    name: 掘金自动签到
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: lxchuan12/juejin-actions@main
+        env: 
+          JUEJIN_COOKIE: ${{secrets.JUEJIN_COOKIE}}
+          MAIL_SENDER: ${{secrets.MAIL_SENDER}}
+          SMTP_PASSWORD: ${{secrets.SMTP_PASSWORD}}
+          MAIL_HOST_SENDER: ${{secrets.MAIL_HOST_SENDER}}
+          MAIL_PORT_SENDER: ${{secrets.MAIL_PORT_SENDER}}
+          MAIL_RECIPIENT: ${{secrets.MAIL_RECIPIENT}}
+        with:
+          who-to-greet: '若川'
+      # Use the output from the `hello` step
+      - name: 点此查看输出结果，比如：签到结果
+        run: | 
+          echo "The time was ${{ steps.hello.outputs.time }}"
+          echo "签到结果： ${{ steps.hello.outputs.checkInResult }}"name: 自动签到
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  checkin: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkin traffic
+        uses: actions/checkin@v2
+
+      - name: Checkin
+        env: 
+          SOCKBOOM_LOGIN_URL: ${{secrets.SOCKBOOM_LOGIN_URL}}
+          SOCKBOOM_CHECKIN_URL: ${{secrets.SOCKBOOM_CHECKIN_URL}}
+          SOCKBOOM_USER: ${{secrets.SOCKBOOM_USER}}
+          SOCKBOOM_PASSWD: ${{secrets.SOCKBOOM_PASSWD}}
+        run: |
+          import requests
+          import sys
+          import traceback
+          form_data = {
+            "email": "${{secrets.SOCKBOOM_USER}}",
+            "passwd": "${{secrets.SOCKBOOM_PASSWD}}"
+          }
+          def run(form_data):
+              s = requests.Session()
+              response = s.post("${{secrets.SOCKBOOM_LOGIN_URL}}", data=form_data)
+              print(response.text)
+              print(response.status_code)
+              if response.status_code == 200:
+                  resp = s.post("${{secrets.SOCKBOOM_CHECKIN_URL}}")
+                  print(resp.text)
+          def main():
+              run(form_data)
+              print("run1")
+          if __name__ == '__main__':
+              try:
+                  sys.exit(main())
+              except Exception as e:
+                  traceback.print_exc()
+        shell: python
