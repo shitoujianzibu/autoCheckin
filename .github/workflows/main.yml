@@ -31,7 +31,7 @@ jobs:
                 resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
                 print(resp.json())
                 if resp.status_code == 200:
-                  if ${{secrets.WEB_HOOK}}
+                  if ${{secrets.WEB_HOOK}}:
                     print('存在')
                     # if resp.json()['ret'] == 0:
                     #   msg_data = {
