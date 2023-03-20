@@ -4,7 +4,6 @@ on:
       - main
   # schedule:
   #   - cron: "0 0 * * *"
-
 jobs:
   checkin: 
     runs-on: ubuntu-latest
@@ -14,6 +13,7 @@ jobs:
           SOCKBOOM_URL: ${{secrets.SOCKBOOM_URL}}
           SOCKBOOM_USER: ${{secrets.SOCKBOOM_USER}}
           SOCKBOOM_PASSWD: ${{secrets.SOCKBOOM_PASSWD}}
+          WEB_HOOK: ${{secrets.WEB_HOOK}}
         run: |
           import requests
           import sys
@@ -30,6 +30,25 @@ jobs:
               if response.status_code == 200:
                 resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
                 print(resp.json())
+                if resp.status_code == 200
+                  if resp.json()['ret'] == 0:
+                    msg_data = {
+                      "msgtype": "markdown",
+                      "markdown": {
+                        "content": "${{secrets.SOCKBOOM_USER}}" + "签到成功，获得<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
+                      }
+                    }
+                    result = s.post("${{secrets.WEB_HOOK}}", json=msg_data)
+                    print(result.text)
+
+                  else:
+                    msg_data = {
+                      "msgtype": "markdown",
+                      "markdown": {
+                        "content": "${{secrets.SOCKBOOM_USER}}" + "签到失败，<font color=\"warning\">" + resp.json()['msg'] + "</font>"
+                      }
+                    }
+                    s.post("${{secrets.WEB_HOOK}}", json=msg_data)
           def main():
               run(form_data)
               print("run1")
@@ -39,4 +58,4 @@ jobs:
               except Exception as e:
                   traceback.print_exc()
         shell: python
-# https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=16d021e2-5604-4c66-83b6-321b39556c2f
+#
