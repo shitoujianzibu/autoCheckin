@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkin traffic
-        uses: shitoujianzibu/autoCheckin@checkin
+        uses: shitoujianzibu/autoCheckin@v2
+        with:
+        python-version: 3.7
 
       # - name: Checkin
       #   env: 
