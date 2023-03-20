@@ -9,11 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkin
-        env: 
-          SOCKBOOM_URL: ${{secrets.SOCKBOOM_URL}}
-          SOCKBOOM_USER: ${{secrets.SOCKBOOM_USER}}
-          SOCKBOOM_PASSWD: ${{secrets.SOCKBOOM_PASSWD}}
-          WEB_HOOK: ${{secrets.WEB_HOOK}}
         run: |
           import requests
           import sys
@@ -31,7 +26,7 @@ jobs:
                 resp = s.post("${{secrets.SOCKBOOM_URL}}/user/checkin")
                 print(resp.json())
                 if resp.status_code == 200:
-                  if "${{secrets.WEB_HOOK}}":
+                  if "${{secrets.WEB_HOOK2}}":
                     print('存在')
                     # if resp.json()['ret'] == 0:
                     #   msg_data = {
@@ -49,6 +44,8 @@ jobs:
                     #     }
                     #   }
                     #   s.post("${{secrets.WEB_HOOK}}", json=msg_data)
+                  else:
+                    print('不存在')
           def main():
               run(form_data)
               print("run1")
