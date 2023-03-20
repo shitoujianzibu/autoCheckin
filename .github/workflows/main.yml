@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkin traffic
-        uses: autoCheckin/checkin
+        uses: shitoujianzibu/autoCheckin@checkin
 
       # - name: Checkin
       #   env: 
