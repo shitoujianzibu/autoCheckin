@@ -27,7 +27,7 @@ jobs:
                     msg_data = {
                       "msgtype": "markdown",
                       "markdown": {
-                        "content": "${{response.json()['user']}}" + "，签到，<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
+                        "content": response.json()['user'] + "，签到，<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
                       }
                     }
                     s.post("${{secrets.WEB_HOOK}}", json=msg_data)
