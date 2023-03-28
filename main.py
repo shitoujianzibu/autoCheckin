@@ -30,27 +30,27 @@ def run(form_data):
 				s.post("${{WEB_HOOK}}", json=msg_data)
 				getUserInfo()
 def getUserInfo():
-userinfo = s.get("${{SOCKBOOM_URL}}/user")
-if userinfo.status_code == 200:
-	try:
-		bs = BeautifulSoup(userinfo.text, 'html.parser')
-		ul = bs.find_all("ul", "unstyled")[0]
-		li = ul.find_all("li")
-		info = ""
-		for item in li:
-			value = item.find_all("span", "pull-right")[0]
-			label = value.previous_sibling
-			info += label + value.string + "\n"
-		print("当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n" + info)
-		msg_data = {
-			"msgtype": "markdown",
-			"markdown": {
-			"content": "当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n" + info
+	userinfo = s.get("${{SOCKBOOM_URL}}/user")
+	if userinfo.status_code == 200:
+		try:
+			bs = BeautifulSoup(userinfo.text, 'html.parser')
+			ul = bs.find_all("ul", "unstyled")[0]
+			li = ul.find_all("li")
+			info = ""
+			for item in li:
+				value = item.find_all("span", "pull-right")[0]
+				label = value.previous_sibling
+				info += label + value.string + "\n"
+			print("当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n" + info)
+			msg_data = {
+				"msgtype": "markdown",
+				"markdown": {
+				"content": "当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n" + info
+				}
 			}
-		}
-		s.post("${{WEB_HOOK}}", json=msg_data)
-	except Exception as e:
-		print(e)
+			s.post("${{WEB_HOOK}}", json=msg_data)
+		except Exception as e:
+			print(e)
 def main():
 	run(form_data)
 	print("main")
