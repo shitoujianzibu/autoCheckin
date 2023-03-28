@@ -7,6 +7,7 @@ SOCKBOOM_USER = config("SOCKBOOM_USER")
 SOCKBOOM_PASSWD = config("SOCKBOOM_PASSWD")
 SOCKBOOM_URL = config("SOCKBOOM_URL")
 WEB_HOOK = config("WEB_HOOK")
+print(SOCKBOOM_USER)
 form_data = {
     "email": "${{SOCKBOOM_USER}}",
     "passwd": "${{SOCKBOOM_PASSWD}}"
