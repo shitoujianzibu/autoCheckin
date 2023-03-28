@@ -21,20 +21,15 @@ def run(form_data):
 	print(response.text)
 	print(response.status_code)
 	if response.status_code == 200:
+		# 声明是全局变量
+		global currentUser
 		currentUser = response.json()['user']
 		checkInRes = s.post(SOCKBOOM_URL + "/user/checkin")
 		print(checkInRes.json())
 		if checkInRes.status_code == 200:
+			global checkInMsg
 			checkInMsg = checkInRes.json()['msg']
 			getUserInfo()
-			# if WEB_HOOK:
-			# 	msg_data = {
-			# 		"msgtype": "markdown",
-			# 		"markdown": {
-			# 		"content": currentUser + "，签到，<font color=\"warning\">"+ checkInMsg + "</font>"
-			# 		}
-			# 	}
-			# 	s.post(WEB_HOOK, json=msg_data)
 def getUserInfo():
 	userinfo = s.get(SOCKBOOM_URL + "/user")
 	if userinfo.status_code == 200:
