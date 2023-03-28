@@ -9,8 +9,8 @@ SOCKBOOM_URL = config("SOCKBOOM_URL")
 WEB_HOOK = config("WEB_HOOK")
 
 form_data = {
-    "email": "${{SOCKBOOM_USER}}",
-    "passwd": "${{SOCKBOOM_PASSWD}}"
+    "email": SOCKBOOM_USER,
+    "passwd": SOCKBOOM_PASSWD
 }
 s = requests.Session()
 def run(form_data):
@@ -18,20 +18,20 @@ def run(form_data):
 	print(response.text)
 	print(response.status_code)
 	if response.status_code == 200:
-		resp = s.post("${{SOCKBOOM_URL}}/user/checkin")
+		resp = s.post(SOCKBOOM_URL + "/user/checkin")
 		print(resp.json())
 		if resp.status_code == 200:
-			if "${{WEB_HOOK}}":
+			if WEB_HOOK:
 				msg_data = {
 					"msgtype": "markdown",
 					"markdown": {
 					"content": response.json()['user'] + "，签到，<font color=\"warning\">"+ resp.json()['msg'] + "</font>"
 					}
 				}
-				s.post("${{WEB_HOOK}}", json=msg_data)
+				s.post(WEB_HOOK, json=msg_data)
 				getUserInfo()
 def getUserInfo():
-	userinfo = s.get("${{SOCKBOOM_URL}}/user")
+	userinfo = s.get(SOCKBOOM_URL + "/user")
 	if userinfo.status_code == 200:
 		try:
 			bs = BeautifulSoup(userinfo.text, 'html.parser')
@@ -49,7 +49,7 @@ def getUserInfo():
 				"content": "当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n" + info
 				}
 			}
-			s.post("${{WEB_HOOK}}", json=msg_data)
+			s.post(WEB_HOOK, json=msg_data)
 		except Exception as e:
 			print(e)
 def main():
