@@ -10,7 +10,6 @@ jobs:
     steps:
       - name: Checkin
         run: |
-          pip install BeautifulSoup4
           import requests
           import sys
           import traceback
@@ -67,5 +66,5 @@ jobs:
                   sys.exit(main())
               except Exception as e:
                   traceback.print_exc()
-        shell: python
+        shell: python3
 #
