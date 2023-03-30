@@ -3,11 +3,17 @@ from decouple import config
 import requests
 import sys
 import traceback
-import time
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 SOCKBOOM_USER = config("SOCKBOOM_USER")
 SOCKBOOM_PASSWD = config("SOCKBOOM_PASSWD")
 SOCKBOOM_URL = config("SOCKBOOM_URL")
 WEB_HOOK = config("WEB_HOOK")
+SHA_TZ = timezone(
+	timedelta(hours=8),
+	name='Asia/Shanghai',
+)
 
 form_data = {
 	"email": SOCKBOOM_USER,
@@ -44,13 +50,14 @@ def getUserInfo():
 					value = item.find_all("span", "pull-right")[0]
 					label = value.previous_sibling
 					info += label.strip() + ": " + value.string + "\n"
-				print("当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n" + info)
-				
+				utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+				beijing_now = utc_now.astimezone(SHA_TZ)
+				print("当前时间：" + beijing_now.strftime('%Y-%m-%d %H:%M:%S') + "\n" + info)
 				msg_data = {
 					"msgtype": "markdown",
 					"markdown": {
 					"content": "当前用户: " + currentUser + "\n" 
-						+ "当前时间: " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n"
+						+ "当前时间: " + beijing_now.strftime('%Y-%m-%d %H:%M:%S') + "\n"
 						+ "签到: <font color=\"warning\">" + checkInMsg + "</font>\n"
 						+ info
 					}
