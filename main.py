@@ -3,6 +3,7 @@ from decouple import config
 import requests
 import sys
 import traceback
+import json
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
@@ -62,7 +63,7 @@ def getUserInfo():
 						+ info
 					}
 				}
-				s.post(WEB_HOOK, json=msg_data)
+				s.post(WEB_HOOK, data=json.dumps(msg_data))
 		except Exception as e:
 			print(e)
 def main():
