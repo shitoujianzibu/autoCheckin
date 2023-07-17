@@ -69,9 +69,9 @@ def getUserInfo():
 					"msgtype": "markdown",
 					"markdown": {
 						"title": "签到提醒",
-						"text": "当前用户: " + currentUser + "\n" 
-							+ "当前时间: " + beijing_now.strftime('%Y-%m-%d %H:%M:%S') + "\n"
-							+ "签到: <font color=\"warning\">" + checkInMsg + "</font>\n"
+						"text": "当前用户: " + currentUser + " \n" 
+							+ "当前时间: " + beijing_now.strftime('%Y-%m-%d %H:%M:%S') + " \n"
+							+ "签到: <font color=\"warning\">" + checkInMsg + "</font> \n"
 							+ info
 						}
 				}
