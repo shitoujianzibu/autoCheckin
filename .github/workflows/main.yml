@@ -25,3 +25,4 @@ jobs:
           SOCKBOOM_PASSWD: ${{ secrets.SOCKBOOM_PASSWD }}
           SOCKBOOM_URL: ${{ secrets.SOCKBOOM_URL }}
           WEB_HOOK: ${{ secrets.WEB_HOOK }}
+          DING_TALK_HOOK: ${{ secrets.DING_TALK_HOOK }}
