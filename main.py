@@ -49,7 +49,7 @@ def getUserInfo():
 			for item in li:
 				value = item.find_all("span", "pull-right")[0]
 				label = value.previous_sibling
-				info += "####" + label.strip() + ": " + value.string + "\n"
+				info += "#### " + label.strip() + ": " + value.string + "\n"
 			utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
 			beijing_now = utc_now.astimezone(SHA_TZ)
 			print("当前时间：" + beijing_now.strftime('%Y-%m-%d %H:%M:%S') + "\n" + info)
