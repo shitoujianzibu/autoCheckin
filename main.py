@@ -64,7 +64,7 @@ def getUserInfo():
 					}
 				}
 				s.post(WEB_HOOK, json=msg_data)
-			elif DING_TALK_HOOK:
+			if DING_TALK_HOOK:
 				msg_data = {
 					"msgtype": "markdown",
 					"markdown": {
